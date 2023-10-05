@@ -2,24 +2,24 @@ import unittest
 from database import create_connection
 from credit_card_module import CreditCard
 from datetime import datetime
-from payment_plan import PaymentPlan
-
 
 class TestDatabase(unittest.TestCase):
 
     def setUp(self):
+        # Crear una conexión a la base de datos al comenzar la prueba
         self.connection = create_connection()
         self.cursor = self.connection.cursor()
 
-        # Eliminamos todas las tarjetas de la tabla
+        # Eliminar todas las tarjetas de la tabla en la base de datos
         self.cursor.execute("DELETE FROM credit_card")
         self.connection.commit()
 
     def tearDown(self):
+        # Cerrar la conexión a la base de datos al finalizar la prueba
         self.connection.close()
 
     def test_insert_card(self, card=None):
-        # Create a CreditCard object if not provided
+        # Crear un objeto CreditCard si no se proporciona uno
         if card is None:
             card = CreditCard(
                 card_number="556677",
@@ -35,7 +35,7 @@ class TestDatabase(unittest.TestCase):
 
         cursor = self.connection.cursor()
 
-        # Check if the card already exists
+        # Comprobar si la tarjeta ya existe en la base de datos
         cursor.execute("SELECT COUNT(*) FROM credit_card WHERE card_number = %s", (card.card_number,))
         card_count = cursor.fetchone()[0]
 
@@ -75,16 +75,6 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(result, "Tarjeta guardada exitosamente")
         return result
 
-    def is_credit_card_expired(self, card):
-        # Obtener la fecha actual
-        current_date = datetime.now().date()
-
-        # Convertir la fecha de vencimiento de la tarjeta a datetime.date
-        due_date = datetime.strptime(card.due_date, "%d/%m/%Y").date()
-
-        # Comparar la fecha actual con la fecha de vencimiento de la tarjeta
-        return current_date > due_date
-
     def test_expired_credit_card(self):
         # Crear una tarjeta de crédito vencida
         card = CreditCard(
@@ -99,10 +89,10 @@ class TestDatabase(unittest.TestCase):
             interest_rate=3.4,
         )
 
-        # Verificar si la tarjeta está vencida
-        is_expired = self.is_credit_card_expired(card)
+        # Verificar si la tarjeta está vencida utilizando el método is_expired
+        is_expired = card.is_expired()
 
-        # Comprobar si se obtiene el mensaje correcto y es True
+        # Comprobar si se obtiene el resultado esperado
         self.assertTrue(is_expired, "NO SE PUEDE AGREGAR PORQUE ESTÁ VENCIDA")
 
     def test_existing_credit_card_2(self):
@@ -150,7 +140,6 @@ class TestDatabase(unittest.TestCase):
         # Verificar si el mensaje es igual a "Tarjeta guardada exitosamente"
         self.assertEqual(mensaje, "Tarjeta guardada exitosamente")
 
-
     def test_T5_insert_credit_card(self):
         # Crear una tarjeta con los valores proporcionados
         card = CreditCard(
@@ -171,10 +160,5 @@ class TestDatabase(unittest.TestCase):
         # Verificar si la tarjeta se guardó exitosamente
         self.assertEqual(result, "Tarjeta guardada exitosamente")
 
-
-
 if __name__ == "__main__":
     unittest.main()
-
-
-

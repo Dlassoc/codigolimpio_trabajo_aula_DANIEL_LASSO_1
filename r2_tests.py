@@ -1,5 +1,5 @@
 import unittest
-from payment_plan import PaymentPlan, PurchaseAmountError, NumInstallmentsError, CardNotFoundError
+from payment_plan import PaymentPlan, PurchaseAmountError, NumInstallmentsError
 class TestPaymentPlan(unittest.TestCase):
 
     def test_calculate_installment_interest_bancolombia(self):
@@ -58,7 +58,6 @@ class TestPaymentPlan(unittest.TestCase):
             capital_amount=None,
             balance=480000,  # Actualización del balance
         )
-
         monthly_installment, total_interest = payment_plan.calculate_installment_interest(annual_interest_rate=0, num_installments=48)
 
         # Redondear los valores a la cantidad de decimales necesarios
@@ -104,9 +103,6 @@ class TestPaymentPlan(unittest.TestCase):
         # Verificar que el mensaje de la excepción sea igual al mensaje esperado
         expected_message = "Error: el monto de compra debe ser superior a cero"
         self.assertEqual(str(context.exception), expected_message)
-
-
-
 
     def test_negative_num_installments_error(self):
             # Caso de error en el número de cuotas (negativo)

@@ -21,7 +21,13 @@ class TestSavingsPlan(unittest.TestCase):
         for _ in range(41):  # Simular 41 meses de ahorro
             sp.save()
         self.assertAlmostEqual(sp.get_balance(), 480000, places=2)
-    
+
+    def test_savings_plan_4(self):
+        # Caso Normal
+        sp = SavingsPlan('1234567890123456', 90000, 1)  # Cuota única, 1 mes de ahorro
+        sp.save()  # Simular 1 mes de ahorro
+        self.assertAlmostEqual(sp.get_balance(), 90810, places=2)  # Verificar el saldo después de 1 mes
+
     
 
 if __name__ == '__main__':
