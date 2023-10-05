@@ -107,12 +107,17 @@ class PaymentPlan:
         remaining_balance = Decimal(str(self.purchase_amount))  # Convertir el monto de compra a Decimal y inicializar el saldo restante.
 
         month = 0  # Inicializar el contador de meses.
+        year = 2023  # Inicializar el año.
 
         # Encabezados de la tabla de amortización
-        headers = ["Month", "Initial Balance", "Monthly Payment", "Interest", "Principal", "Remaining Balance", "Card Identity", "Due Date"]
+        headers = ["Month", "Year", "Initial Balance", "Monthly Payment", "Interest", "Principal", "Remaining Balance", "Card Identity", "Due Date"]
 
         while remaining_balance > 0:
             month += 1  # Incrementar el mes.
+
+            if month > 12:
+                month = 1  # Reiniciar el contador de meses a 1
+                year += 1  # Incrementar el año en 1
 
             actual_payment = Decimal(str(monthly_installment))  # Convertir el pago mensual a Decimal.
 
@@ -128,19 +133,21 @@ class PaymentPlan:
             # Crear una lista con la información de pago para el mes actual y agregarla a la tabla de amortización.
             payment_info = [
                 month,
+                year,  # Añadir el año actual
                 "{:.2f}".format(remaining_balance.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)),
                 "{:.2f}".format(actual_payment.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)),
                 "{:.2f}".format(interest_payment.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)),
                 "{:.2f}".format(principal_payment.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)),
                 "{:.2f}".format(remaining_balance.quantize(Decimal("0.0001"), rounding=ROUND_HALF_UP)),
                 card_number,  # Identidad de la tarjeta como cadena
-                f"{payment_due_date}/{month}/2023"  # Fecha de pago ficticia
+                f"{payment_due_date}/{month}/{year}"  # Fecha de pago ficticia
             ]
             amortization_table.append(payment_info)  # Agregar la información de pago a la tabla de amortización.
 
         print(tabulate(amortization_table, headers=headers, tablefmt="simple"))  # Mostrar la tabla de amortización.
 
         return amortization_table  # Devolver la tabla de amortización
+
 
 
     def calculate_savings_plan(self):
