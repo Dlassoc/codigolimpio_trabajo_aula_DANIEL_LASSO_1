@@ -1,6 +1,6 @@
 import unittest
-from database import create_connection
-from credit_card_module import CreditCard
+from database_info.database import create_connection
+from exceptions import CreditCard
 from datetime import datetime
 
 class TestDatabase(unittest.TestCase):

@@ -2,7 +2,7 @@
 import psycopg2
 from exceptions import PurchaseAmountError, CardNotFoundError,  NumInstallmentsError
 from tabulate import tabulate
-from database import HOST, DATABASE, USER, PASSWORD, PORT
+from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT
 
 class PaymentPlan:
     def __init__(self, card_number, purchase_date, purchase_amount, payment_date, payment_amount, interest_amount, capital_amount, balance):

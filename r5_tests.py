@@ -1,9 +1,8 @@
 import unittest
-from payment_plan_t4 import PaymentPlan
+from payment_plans import r5pyment_plan
 import psycopg2
-from database import HOST, DATABASE, USER, PASSWORD, PORT 
-from datetime import datetime
-from decimal import Decimal 
+from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT 
+
 
 class TestPaymentPlan(unittest.TestCase):
     def setUp(self):
@@ -29,7 +28,7 @@ class TestPaymentPlan(unittest.TestCase):
         num_installments = 36
         payment_due_date = 10
 
-        self.payment_plan = PaymentPlan(
+        self.payment_plan = r5pyment_plan.PaymentPlan(
             card_number=card_number,
             purchase_date=purchase_date,
             purchase_amount=purchase_amount,

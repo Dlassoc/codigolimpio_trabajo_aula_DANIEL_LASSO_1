@@ -1,7 +1,7 @@
 import psycopg2
 from decimal import Decimal, ROUND_HALF_UP
 from tabulate import tabulate
-from database import HOST, DATABASE, USER, PASSWORD, PORT 
+from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT 
 class PaymentPlan:
     def __init__(self, card_number, purchase_date, purchase_amount, payment_date, payment_amount, interest_amount, capital_amount, balance):
         if purchase_amount <= 0:

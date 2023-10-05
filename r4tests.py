@@ -1,9 +1,8 @@
 import unittest
-from payment_plan_t4 import PaymentPlan
+from payment_plans import payment_plan_t4
 import psycopg2
-from database import HOST, DATABASE, USER, PASSWORD, PORT 
-from datetime import datetime
-from decimal import Decimal 
+from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT 
+
 class TestPaymentPlan(unittest.TestCase):
     def setUp(self):
         # Establecer la conexión y el cursor antes de cada prueba
@@ -41,7 +40,7 @@ class TestPaymentPlan(unittest.TestCase):
         payment_due_date = 10
 
         # Crear un objeto PaymentPlan
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t4.PaymentPlan(
             card_number=card_number,
             purchase_date=purchase_date,
             purchase_amount=purchase_amount,
@@ -76,7 +75,7 @@ class TestPaymentPlan(unittest.TestCase):
         payment_due_date = 16
 
         # Crear un objeto PaymentPlan
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t4.PaymentPlan(
             card_number=card_number,
             purchase_date=purchase_date,
             purchase_amount=purchase_amount,
@@ -110,7 +109,7 @@ class TestPaymentPlan(unittest.TestCase):
         payment_due_date = 5
 
         # Crear un objeto PaymentPlan
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t4.PaymentPlan(
             card_number=card_number,
             purchase_date=purchase_date,
             purchase_amount=purchase_amount,
@@ -144,7 +143,7 @@ class TestPaymentPlan(unittest.TestCase):
         payment_due_date = 5
 
         # Crear un objeto PaymentPlan
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t4.PaymentPlan(
             card_number=card_number,
             purchase_date=purchase_date,
             purchase_amount=purchase_amount,

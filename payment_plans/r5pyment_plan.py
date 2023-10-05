@@ -1,6 +1,6 @@
 from payment_plan_t4 import PaymentPlan
 import psycopg2
-from database import HOST, DATABASE, USER, PASSWORD, PORT 
+from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT 
 from datetime import datetime, timedelta
 from decimal import Decimal 
 

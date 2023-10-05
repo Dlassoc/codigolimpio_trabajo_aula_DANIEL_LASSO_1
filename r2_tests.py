@@ -1,10 +1,11 @@
 import unittest
-from payment_plan import PaymentPlan, PurchaseAmountError, NumInstallmentsError
+from payment_plans import payment_plan_t1_t2
+from exceptions import PurchaseAmountError, NumInstallmentsError
 class TestPaymentPlan(unittest.TestCase):
 
     def test_calculate_installment_interest_bancolombia(self):
         # Caso normal para Bancolombia 556677
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t1_t2.PaymentPlan(
             card_number="Bancolombia 556677",
             purchase_date="2023-08-04",
             purchase_amount=200000,
@@ -26,7 +27,7 @@ class TestPaymentPlan(unittest.TestCase):
 
     def test_calculate_installment_interest_falabella(self):
         # Caso normal para Falabella 223344
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t1_t2.PaymentPlan(
             card_number="Falabella 223344",
             purchase_date="2023-08-04",
             purchase_amount=850000,
@@ -48,7 +49,7 @@ class TestPaymentPlan(unittest.TestCase):
 
     def test_calculate_installment_interest_zero_interest(self):
         # Caso con tasa de interés cero
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t1_t2.PaymentPlan(
             card_number="BBVA 445566",
             purchase_date="2023-08-04",
             purchase_amount=480000,
@@ -69,7 +70,7 @@ class TestPaymentPlan(unittest.TestCase):
 
     def test_calculate_installment_interest_single_payment(self):
         # Caso Cuota única
-        payment_plan = PaymentPlan(
+        payment_plan = payment_plan_t1_t2.PaymentPlan(
             card_number="BBVA 445566",
             purchase_date="2023-08-04",
             purchase_amount=90000,
@@ -89,7 +90,7 @@ class TestPaymentPlan(unittest.TestCase):
     def test_purchase_amount_error(self):
         # Caso de error en el monto de compra
         with self.assertRaises(PurchaseAmountError) as context:
-            payment_plan = PaymentPlan(
+            payment_plan = payment_plan_t1_t2.PaymentPlan(
                 card_number="Falabella 223344",
                 purchase_date="2023-08-04",
                 purchase_amount=0,  # Monto igual a cero, debería lanzar la excepción
@@ -107,7 +108,7 @@ class TestPaymentPlan(unittest.TestCase):
     def test_negative_num_installments_error(self):
             # Caso de error en el número de cuotas (negativo)
             with self.assertRaises(NumInstallmentsError) as context:
-                payment_plan = PaymentPlan(
+                payment_plan = payment_plan_t1_t2.PaymentPlan(
                     card_number="Bancolombia 556677",
                     purchase_date="2023-08-04",
                     purchase_amount=50000,

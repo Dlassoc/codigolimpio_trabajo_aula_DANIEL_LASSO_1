@@ -1,5 +1,5 @@
 import psycopg2
-from SecretConfig import HOST, DATABASE, USER, PASSWORD, PORT
+from database_info.SecretConfig import HOST, DATABASE, USER, PASSWORD, PORT
 
 def create_connection():
     return psycopg2.connect(host=HOST, dbname=DATABASE, user=USER, password=PASSWORD, port=PORT)
