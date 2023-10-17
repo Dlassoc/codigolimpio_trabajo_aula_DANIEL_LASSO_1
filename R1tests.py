@@ -1,7 +1,8 @@
 import unittest
 from database_info.database import create_connection
-from exceptions import CreditCard
+from exceptions import PurchaseAmountError, UsuryError, CardNotFoundError, NumInstallmentsError
 from datetime import datetime
+from credit_card_module import CreditCard
 
 class TestDatabase(unittest.TestCase):
 

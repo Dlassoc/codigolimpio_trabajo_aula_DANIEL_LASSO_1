@@ -1,24 +1,7 @@
 # payment_plan.py
 import psycopg2
 from exceptions import PurchaseAmountError, CardNotFoundError,  NumInstallmentsError
-from tabulate import tabulate
 from database_info.database import HOST, DATABASE, USER, PASSWORD, PORT
-
-class PaymentPlan:
-    def __init__(self, card_number, purchase_date, purchase_amount, payment_date, payment_amount, interest_amount, capital_amount, balance):
-        if purchase_amount <= 0:
-            raise PurchaseAmountError(
-                "Error: el monto de compra debe ser superior a cero")
-        # Eliminar el nombre del banco y guardar solo los últimos 4 dígitos
-        self.card_number = card_number[-4:]
-        self.purchase_date = purchase_date
-        self.purchase_amount = purchase_amount
-        self.payment_date = payment_date
-        self.payment_amount = payment_amount
-        self.interest_amount = interest_amount
-        self.capital_amount = capital_amount
-        self.balance = balance
-        self.amortization_plan = []
 
 class PaymentPlan:
     def __init__(self, card_number: str, purchase_date: str, purchase_amount: float, payment_date, payment_amount, interest_amount, capital_amount, balance):

@@ -12,6 +12,18 @@ class CreditCard:
         self.monthly_fee = monthly_fee
         self.interest_rate = interest_rate
         
+    def to_dict(self):
+        return {
+            'card_number': self.card_number,
+            'owner_id': self.owner_id,
+            'owner_name': self.owner_name,
+            'bank_name': self.bank_name,
+            'due_date': self.due_date,
+            'franchise': self.franchise,
+            'payment_day': self.payment_day,
+            'monthly_fee': self.monthly_fee,
+            'interest_rate': self.interest_rate,
+        }
     def is_expired(self):
         # Obtener la fecha actual
         current_date = datetime.now().date()
