@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 from credit_card_module import CreditCard
+import psycopg2
 from database_info.database import create_connection
 from decimal import Decimal
 from payment_plans.payment_plan_t4 import PaymentPlan
-
 app = Flask(__name__)
 
 @app.route('/api/cards/new')
@@ -183,6 +183,34 @@ def register_purchase():
         return jsonify({'status': 'ok'})
     except Exception as e:
         return jsonify({'status': 'error', 'error': str(e)}), 400
+
+
+
+@app.route("/api/cards/card_info")
+def get_credit_card_info():
+    card_number = request.args['card_number']
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM credit_card WHERE card_number = %s", (card_number,))
+    card_info = cursor.fetchone()
+    
+    if card_info is not None:
+        card_info_dict = {
+            'card_number': card_info[0],
+            'owner_id': card_info[1],
+            'owner_name': card_info[2],
+            'bank_name': card_info[3],
+            'due_date': card_info[4],
+            'franchise': card_info[5],
+            'payment_day': card_info[6],
+            'monthly_fee': float(card_info[7]),  
+            'interest_rate': float(card_info[8])  
+        }
+
+        return jsonify(card_info_dict)
+    else:
+        return jsonify({'status': 'error', 'message': 'Tarjeta no encontrada'})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
