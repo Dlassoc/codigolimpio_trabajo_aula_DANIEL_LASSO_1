@@ -18,3 +18,4 @@ class UsuryError(Exception):
     def __init__(self, message="Error: La tasa de interés supera el límite legal"):
         self.message = message
         super().__init__(self.message)
+        
