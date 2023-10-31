@@ -87,10 +87,13 @@ class TestPaymentPlan(unittest.TestCase):
         total_cuota = sum(payment['cuota'] for payment in monthly_payments)
 
         # Valores esperados
-        expected_total_cuota = 71675  # Total según tu ejemplo
+        expected_total_cuota = 71675  
 
         # Verifica que la suma de las cuotas mensuales sea igual a los valores esperados
         self.assertEqual(total_cuota, expected_total_cuota)
+
+
+
 
 if __name__ == "__main__":
     unittest.main()

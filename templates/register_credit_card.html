@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Tarjeta de Crédito</title>
+</head>
+<body>
+    <h1>Registro de Tarjeta de Crédito</h1>
+    <form action="/register_card" method="POST">
+        <label for="card_number">Número de Tarjeta:</label>
+        <input type="text" name="card_number" id="card_number" required><br><br>
+
+        <label for="owner_id">ID del Propietario:</label>
+        <input type="text" name="owner_id" id="owner_id" required><br><br>
+
+        <label for="owner_name">Nombre del Propietario:</label>
+        <input type="text" name="owner_name" id="owner_name" required><br><br>
+
+        <label for="bank_name">Nombre del Banco:</label>
+        <input type="text" name="bank_name" id="bank_name" required><br><br>
+
+        <label for="due_date">Fecha de Vencimiento (YYYY-MM-DD):</label>
+        <input type="text" name="due_date" id="due_date" required><br><br>
+
+        <label for="franchise">Franquicia:</label>
+        <input type="text" name="franchise" id="franchise" required><br><br>
+
+        <label for="payment_day">Día de Pago:</label>
+        <input type="text" name="payment_day" id="payment_day" required><br><br>
+
+        <label for="monthly_fee">Cuota de Manejo Mensual:</label>
+        <input type="text" name="monthly_fee" id="monthly_fee" required><br><br>
+
+        <label for="interest_rate">Tasa de Interés (%):</label>
+        <input type="text" name="interest_rate" id="interest_rate" required><br><br>
+
+        <input type="submit" value="Guardar Tarjeta">
+    </form>
+</body>
+</html>

@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from credit_card_module import CreditCard
+import psycopg2
 from database_info.database import create_connection
 from decimal import Decimal
 from payment_plans.payment_plan_t4 import PaymentPlan
-
 app = Flask(__name__)
 
 @app.route('/api/cards/new')
@@ -184,5 +184,103 @@ def register_purchase():
     except Exception as e:
         return jsonify({'status': 'error', 'error': str(e)}), 400
 
+@app.route('/api/cards/card_info', methods=['GET'])
+def show_credit_card_info_form():
+    return render_template('index.html')
+
+@app.route('/api/cards/card_info', methods=['POST'])
+def get_credit_card_info():
+    card_number = request.form['card_number']
+
+    if not card_number:
+        return jsonify({'status': 'error', 'message': 'Por favor, ingrese un número de tarjeta válido'}), 400
+
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM credit_card WHERE card_number = %s", (card_number,))
+    card_info = cursor.fetchone()
+    connection.close()
+
+    if card_info is not None:
+        card_info_dict = {
+            'card_number': card_info[0],
+            'owner_id': card_info[1],
+            'owner_name': card_info[2],
+            'bank_name': card_info[3],
+            'due_date': card_info[4],
+            'franchise': card_info[5],
+            'payment_day': card_info[6],
+            'monthly_fee': float(card_info[7]),
+            'interest_rate': float(card_info[8])
+        }
+
+        return render_template('credit_card_info.html', card_info=card_info_dict)
+    else:
+        return jsonify({'status': 'error', 'message': 'Tarjeta no encontrada'}), 404
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+
+@app.route('/register_card', methods=['POST'])
+def register_credit_card_service():
+    """Ejemplo de la URL de petición:
+    http://localhost:5000/api/card/new?card_number=########&owner_id=######&owner_name=XXXXXXXXXX&bank_name=XXXXXX&due_date=YYYY-MM-DD&franchise=XXXX&payment_day=##&monthly_fee=#####&interest_rate=###"""
+    try:
+        # Recuperar los datos de la tarjeta del request utilizando request.args
+        card = CreditCard(
+            card_number=request.form['card_number'],
+            owner_id=request.form['owner_id'],
+            owner_name=request.form['owner_name'],
+            bank_name=request.form['bank_name'],
+            due_date=request.form['due_date'],
+            franchise=request.form['franchise'],
+            payment_day=request.form['payment_day'],
+            monthly_fee=request.form['monthly_fee'],
+            interest_rate=request.form['interest_rate']
+        )
+
+        # Crear una conexión a la base de datos
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        # Comprobar si la tarjeta ya existe en la base de datos
+        cursor.execute("SELECT COUNT(*) FROM credit_card WHERE card_number = %s", (card.card_number,))
+        card_count = cursor.fetchone()[0]
+
+        # Si la tarjeta ya existe, retornar un mensaje de error
+        if card_count > 0:
+            connection.close()
+            return render_template('registration_error.html', message="La tarjeta ya existe en la base de datos"), 400
+
+        # Insertar la tarjeta en la base de datos
+        cursor.execute(
+            "INSERT INTO credit_card (card_number, owner_id, owner_name, bank_name, due_date, franchise, payment_day, monthly_fee, interest_rate) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (
+                card.card_number,
+                card.owner_id,
+                card.owner_name,
+                card.bank_name,
+                card.due_date,
+                card.franchise,
+                card.payment_day,
+                card.monthly_fee,
+                card.interest_rate,
+            ),
+        )
+        connection.commit()
+        connection.close()
+
+        # Retornar un mensaje de éxito
+        return render_template('registration_success.html', message='Tarjeta guardada exitosamente')
+    except Exception as e:
+            return render_template('registration_error.html', message=str(e)), 400
+    
+@app.route("/register_credit_card", methods=['GET'])
+def show_credit_card_form():
+    return render_template('register_credit_card.html')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
