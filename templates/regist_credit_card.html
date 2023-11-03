@@ -4,7 +4,10 @@
     <title>Registro de Tarjeta de Crédito</title>
 </head>
 <body>
+    
     <h1>Registro de Tarjeta de Crédito</h1>
+    {% include 'navbar.html' %}
+
     <form action="/register_card" method="POST">
         <label for="card_number">Número de Tarjeta:</label>
         <input type="text" name="card_number" id="card_number" required><br><br>

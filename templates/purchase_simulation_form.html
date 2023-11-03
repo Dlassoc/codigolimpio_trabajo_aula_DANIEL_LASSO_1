@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simulación de Compra</title>
+</head>
+<body>
+    <h1>Simulación de Compra</h1>
+    {% include 'navbar.html' %}
+
+    <form action="/simulate_purchase" method="POST">
+        <label for="card_number">Número de Tarjeta:</label>
+        <input type="text" name="card_number" id="card_number" required><br><br>
+
+        <label for="purchase_amount">Monto de la Compra:</label>
+        <input type="text" name="purchase_amount" id="purchase_amount" required><br><br>
+
+        <label for="num_installments">Número de Cuotas:</label>
+        <input type="text" name="num_installments" id="num_installments" required><br><br>
+
+        <input type="submit" value="Calcular Cuotas">
+    </form>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Informe de Programación de Pagos</title>
+</head>
+<body>
+    <h1>Informe de Programación de Pagos</h1>
+    <table>
+        <tr>
+            <th>Fecha de Pago</th>
+            <th>Cuota Mensual</th>
+            <th>Monto de la Cuota</th>
+        </tr>
+        {% for payment in payment_schedule_data %}
+        <tr>
+            <td>{{ payment[0] }}</td>
+            <td>${{ payment[1]  }}</td>
+            <td>${{ payment[2]  }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button onclick="window.location.href='/';">Inicio</button>
+</body>
+</html>

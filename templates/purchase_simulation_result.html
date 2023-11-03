@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado de Simulación de Compra</title>
+</head>
+<body>
+    <h1>Resultado de Simulación de Compra</h1>
+    {% include 'navbar.html' %}
+
+    <p>Mensualidad: ${{ monthly_installment }}</p>
+    <p>Total de Intereses: ${{ total_interests }}</p>
+    <p>Total de Cuota: ${{ monthly_installment + total_interests }}</p> <!-- Agregado -->
+
+    <form action="/simulate_purchase" method="GET">
+        <input type="submit" value="Simular Otra Compra">
+    </form>
+</body>
+</html>

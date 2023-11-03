@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Compra</title>
+</head>
+<body>
+    <h1>Registro de Compra</h1>
+    <form action="/register_purchase" method="POST">
+        <label for="card_number">Número de Tarjeta de Crédito:</label>
+        <input type="text" name="card_number" id="card_number" required><br><br>
+
+        <label for="purchase_amount">Monto de la Compra:</label>
+        <input type="number" name="purchase_amount" id="purchase_amount" required><br><br>
+
+        <label for="payments">Número de Pagos:</label>
+        <input type="number" name="payments" id="payments" required><br><br>
+
+        <label for="purchase_date">Fecha de Compra (YYYY-MM-DD):</label>
+        <input type="text" name="purchase_date" id="purchase_date" required><br><br>
+
+        <input type="submit" value="Registrar Compra">
+    </form>
+    <button onclick="window.location.href='/';">Inicio</button>
+</body>
+</html>

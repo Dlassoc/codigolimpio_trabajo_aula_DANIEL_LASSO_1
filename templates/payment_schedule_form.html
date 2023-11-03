@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Programación de Pagos</title>
+</head>
+<body>
+    <h1>Programación de Pagos</h1>
+    <form action="/payment_schedule" method="POST">
+        <label for="card_number">Número de Tarjeta de Crédito:</label>
+        <input type="text" name="card_number" id="card_number" required><br><br>
+
+        <input type="submit" value="Generar Informe">
+    </form>
+    <a href="/">Inicio</a>
+
+    {% if payment_schedule_data %}
+    <h2>Detalle de Pagos</h2>
+    <table>
+        <tr>
+            <th>Fecha de Pago</th>
+            <th>Cuota Mensual</th>
+            <th>Monto de la Cuota</th>
+        </tr>
+        {% for payment in payment_schedule_data %}
+        <tr>
+            <td>{{ payment[0] }}</td>
+            <td>${{ payment[1] }}</td>
+            <td>${{ payment[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    {% endif %}
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>

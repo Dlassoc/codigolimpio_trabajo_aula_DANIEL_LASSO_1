@@ -1,0 +1,5 @@
+HOST = 'tu_host'
+PORT = 'tu_puerto'
+USER = 'tu_usuario'
+PASSWORD = 'tu_contraseña'
+NAME = 'tu_base_de_datos'

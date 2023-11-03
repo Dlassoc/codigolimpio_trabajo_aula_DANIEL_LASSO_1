@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sugerencia de Ahorro Programado</title>
+</head>
+<body>
+    <h1>Sugerencia de Ahorro Programado</h1>
+    {% include 'navbar.html' %}
+
+    <form action="/save_money_plan" method="POST">
+        <label for="purchase_amount">Monto de la Compra:</label>
+        <input type="text" name="purchase_amount" id="purchase_amount" required><br><br>
+
+        <label for="monthly_payment">Pago Mensual:</label>
+        <input type="text" name="monthly_payment" id="monthly_payment" required><br><br>
+
+        <label for="interest_rate">Tasa de Interés (%):</label>
+        <input type="text" name="interest_rate" id="interest_rate" required><br><br>
+
+        <input type="submit" value="Calcular Plan de Ahorro">
+    </form>
+    <button onclick="window.location.href='/';">Inicio</button>
+</body>
+</html>
